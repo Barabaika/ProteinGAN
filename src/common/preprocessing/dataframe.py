@@ -115,7 +115,7 @@ def save_as_tfrecords_multithreaded(path, original_data, columns=["sequence"], g
         else:
             group_name = "_".join([str(e) for e in group_id])
         filename = os.path.join(path, group_name)
-        args = (filename, data.get_group(group_id), columns)
+        args = (filename, data.get_group(group_id), group_by_col, columns)
         t = threading.Thread(target=save_as_tfrecords, args=args)
         t.start()
         threads.append(t)
@@ -147,7 +147,7 @@ def to_float_feature(data):
     return tf.train.Feature(float_list=tf.train.FloatList(value=data))
 
 
-def save_as_tfrecords(filename, data, columns=["sequence"], extension="tfrecords"):
+def save_as_tfrecords(filename, data, group_by_col, columns=["sequence"], extension="tfrecords"):
     """Processes a dataframe and stores data into tfrecord file
 
     Args:
@@ -163,7 +163,7 @@ def save_as_tfrecords(filename, data, columns=["sequence"], extension="tfrecords
         with tf.python_io.TFRecordWriter(filename) as writer:
             for index, row in data.iterrows():
                 feature = {
-                    'label': to_int_feature([row[0]])
+                    'label': to_int_feature([row[group_by_col]])
                 }
                 for col_name in columns:
                     value = row[col_name]

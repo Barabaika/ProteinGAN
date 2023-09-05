@@ -119,7 +119,7 @@ def extract_seq_and_label(record, args):
     seq = tf.cast(features['sequence'], tf.int32, name="seq")
     labels = tf.cast(features['label'], tf.int32, name="labels")
 
-    seq = pad_up_to(seq, args[0], dynamic_padding=args[1])
+    # seq = pad_up_to(seq, 256, dynamic_padding=args[1]) # args[0]
     return seq, labels
 
 

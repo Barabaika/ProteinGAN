@@ -24,13 +24,18 @@ class LocalBlastSummary(BlastSummary):
         self.add_updated_text_to_tensorboard(sequences)
 
     def print_blast_results(self, sequences, fasta, type):
+        # print('*****SEQUENCES:', len(sequences))
         result, err = get_local_blast_results(self._summary_writer.get_logdir(), self.db_path+"_"+type, fasta)
-        sequences, evalues, similarities, identities = update_sequences_with_blast_results(result, sequences)
-        avg_similarities, s_max = self.get_stats(len(sequences), similarities, "{}/BLOMSUM45".format(type), np.max)
-        avg_evalues, e_min = self.get_stats(len(evalues), evalues, "{}/Evalue".format(type), np.min)
-        avg_identities, i_max = self.get_stats(len(identities), identities, "{}/Identity".format(type), np.max)
-        template = " BLAST {:5s}: BLOMSUM45: {:.2f}({:.2f}) | E.value: {:.3f}({:.3f}) | Identity: {:.2f}({:.2f})"
-        tf.logging.info(template.format(type, avg_similarities, s_max, avg_evalues, e_min, avg_identities, i_max))
+        # print('*****RESULT:', result)
+        if len(result) == 1:
+            print('No hits were found for each seq in query')
+        else:
+            sequences, evalues, similarities, identities = update_sequences_with_blast_results(result, sequences)
+            avg_similarities, s_max = self.get_stats(len(sequences), similarities, "{}/BLOMSUM45".format(type), np.max)
+            avg_evalues, e_min = self.get_stats(len(evalues), evalues, "{}/Evalue".format(type), np.min)
+            avg_identities, i_max = self.get_stats(len(identities), identities, "{}/Identity".format(type), np.max)
+            template = " BLAST {:5s}: BLOMSUM45: {:.2f}({:.2f}) | E.value: {:.3f}({:.3f}) | Identity: {:.2f}({:.2f})"
+            tf.logging.info(template.format(type, avg_similarities, s_max, avg_evalues, e_min, avg_identities, i_max))
         return sequences
 
     def get_stats(self, batch_size, similarities, name, f):

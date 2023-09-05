@@ -17,7 +17,7 @@ class ResnetGenerator(Generator):
         self.final_bn = ops.BatchNorm(name='g_bn')
 
     def get_strides(self):
-        strides = [(1, 2), (1, 2), (1, 2), (1,2)]
+        strides = [(1, 2), (1, 2), (1, 2), (1,2)] #+ [(1, 2), (1, 2)]
         if self.length == 512:
             strides.extend([(1, 2), (1, 2)])
         return strides

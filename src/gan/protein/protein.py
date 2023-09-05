@@ -48,6 +48,7 @@ class Protein(object):
         return embeddings, embeddings_variation
 
     def prepare_real_data(self, real_x, labels):
+        print('****real', real_x, labels)
         real_x = tf.reshape(real_x, [self.config.batch_size, self.width], name=REAL_PROTEINS)
         reactions = self.get_reactions(labels)
         labels = tf.identity(tf.squeeze(labels), name=LABELS)

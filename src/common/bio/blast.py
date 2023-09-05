@@ -82,7 +82,7 @@ def get_local_blast_results(data_dir, db_path, fasta):
     # TODO: Enzyme class
     blastp = subprocess.Popen(
         ['blastp', '-db', db_path, "-max_target_seqs", "1", "-outfmt", "10 qseqid score evalue pident",
-         "-matrix", "BLOSUM45", "-query", query_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+         "-matrix", "BLOSUM45", "-query", query_path, "-num_threads", "5"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     results, err = blastp.communicate()
     return parse_blast_results(results.decode()), err.decode()
@@ -98,6 +98,7 @@ def parse_blast_results(results):
     """
     parsed = {}
     for line in results.split(os.linesep):
+        # print('**plastp line', line)
         parts = line.split(",")
         parsed[parts[0]] = parts[1:]
 

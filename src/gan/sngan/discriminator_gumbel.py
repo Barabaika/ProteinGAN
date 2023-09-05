@@ -10,7 +10,7 @@ from common.model import ops
 class GumbelDiscriminator(Discriminator):
     def __init__(self, config, shape, num_classes=None, scope_name=None):
         super(GumbelDiscriminator, self).__init__(config, shape, num_classes, scope_name)
-        self.strides = [(1, 2), (1, 2), (1, 2), (1, 2)]
+        self.strides = [(1, 2), (1, 2), (1, 2), (1, 2)] + [(1, 2)]
         if self.length == 512:
             self.strides.extend([(1, 2), (1, 2)])
 

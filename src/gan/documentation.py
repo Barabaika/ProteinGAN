@@ -19,8 +19,8 @@ def get_hyper_parameters(flags, properties):
     path = os.path.join(os.path.dirname(__file__), 'templates', 'HYPERPARAMETERS.md')
     with open(path, 'r') as f:
         hyper_parameters = f.read()
-    input_w = properties["seq_length"] if "protein" in flags.dataset else properties["image_width"]
-    input_h = flags.embedding_height if "protein" in flags.dataset else properties["image_height"]
+    input_w = properties["image_width"] if "image" in flags.dataset else properties["seq_length"]
+    input_h = properties["image_height"] if "image" in flags.dataset else flags.embedding_height
     hyper_parameters = hyper_parameters.format(
         # Header
         flags.model_type, flags.dataset,
@@ -207,11 +207,11 @@ def get_properties(flags):
 
 
 def setup_logdir(flags, properties):
-    if "protein" in flags.dataset :
-        one_hot = "one_hot" if flags.one_hot else "embedding"
-        input_size = "{}x{}_{}".format(flags.embedding_height,  properties["seq_length"], one_hot)
-    else:
-        input_size = "{}x{}x{}".format(properties["image_height"], properties["image_width"], properties["num_channels"])
+    # if "protein" in flags.dataset :
+    one_hot = "one_hot" if flags.one_hot else "embedding"
+    input_size = "{}x{}_{}".format(flags.embedding_height,  properties["seq_length"], one_hot)
+    # else:
+    #     input_size = "{}x{}x{}".format(properties["image_height"], properties["image_width"], properties["num_channels"])
 
     model_dir = '%s_k_%sx%s_d_%s_%s' % (flags.name, flags.kernel_height, flags.kernel_width, flags.dilation_rate,
                                         flags.pooling)

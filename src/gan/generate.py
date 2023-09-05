@@ -8,16 +8,16 @@ import time
 
 import tensorflow as tf
 from absl import flags
-from bio.amino_acid import sequences_to_fasta
-from bio.blast import get_local_blast_results, update_sequences_with_blast_results
-from bio.sequence import Sequence
+from common.bio.amino_acid import sequences_to_fasta
+from common.bio.blast import get_local_blast_results, update_sequences_with_blast_results
+from common.bio.sequence import Sequence
 from gan.documentation import setup_logdir, get_properties
 from gan.models import get_model
 from gan.parameters import get_flags
 from gan.protein.helpers import convert_to_acid_ids
 from tensorflow.python.training.monitored_session import ChiefSessionCreator, MonitoredSession
 
-flags.DEFINE_integer('n_seqs', 21, 'Number of sequences to be generated')
+flags.DEFINE_integer('n_seqs', 2048, 'Number of sequences to be generated')
 flags.DEFINE_float('stddev', 0.5, 'Standard deviation of noise')
 flags.DEFINE_boolean('use_cpu', True, 'Flags to determine whether to use CPU or not')
 flags.DEFINE_boolean('blast', False, 'Flags to determine whether to add blast results')

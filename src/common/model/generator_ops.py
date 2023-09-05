@@ -40,14 +40,23 @@ def _block(x, labels, out_channels, num_classes, name, conv=ops.snconv2d, kernel
             bn1 = ops.BatchNorm(name='bn_1')
             x = x
         x = act(x)
+        print('x', x.shape)
         x = up_sampling(x, pooling, out_channels, conv, kernel, strides, 'conv1', padding)
+        print('x conv1', x.shape)
         if num_classes is not None:
             x = bn1(x, labels)
         else:
             x = x
         x = act(x)
+        print('x conv2', x.shape)
         x = conv(x, out_channels, kernel, dilations=dilations, name='conv2', padding=padding)
         x_0 = up_sampling(x_0, pooling, out_channels, conv, kernel, strides, 'conv3', padding)
+        
+        if x.shape[2] < 254:
+          paddings = tf.constant([[0, 0,],[0, 0,], [0, 1], [0, 0,]])
+          x = tf.pad(x, paddings, "CONSTANT") 
+          x_0 = tf.pad(x_0, paddings, "CONSTANT") 
+
         return x_0 + x
 
 

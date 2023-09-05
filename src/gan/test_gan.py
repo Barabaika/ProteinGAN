@@ -20,8 +20,8 @@ from tensorflow.python.training.monitored_session import ChiefSessionCreator, Mo
 slim = tf.contrib.slim
 tfgan = tf.contrib.gan
 
-flags.DEFINE_integer('n_seqs', 21, 'Number of sequences to be generated')
-flags.DEFINE_boolean('use_cpu', True, 'Flags to determine whether to use CPU or not')
+flags.DEFINE_integer('n_seqs', 2048, 'Number of sequences to be generated')
+flags.DEFINE_boolean('use_cpu', False, 'Flags to determine whether to use CPU or not')
 FLAGS = get_flags()
 
 

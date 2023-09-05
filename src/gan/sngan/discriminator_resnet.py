@@ -10,7 +10,7 @@ class ResnetDiscriminator(Discriminator):
     def __init__(self, config, shape, num_classes=None, scope_name=None):
         super(ResnetDiscriminator, self).__init__(config, shape, num_classes, scope_name)
         self.act = tf.nn.relu
-        self.strides = [(1, 2), (1, 2), (1, 2), (1, 2)]
+        self.strides = [(1, 2), (1, 2), (1, 2), (1, 2)] #+ [(1, 2), (1, 2)]
         if self.length == 512:
             self.strides.extend([(1, 2), (1, 2)])
 

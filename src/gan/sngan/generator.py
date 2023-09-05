@@ -20,6 +20,7 @@ class Generator(Model):
         with tf.variable_scope(self.scope_name) as scope:
             if reuse:
                 scope.reuse_variables()
+            print('z shape', z.shape)
             out = self.network(z, labels, reuse)
             self.validate_shape(out, self.output_shape)
             self.log("output {}".format(out.shape))
