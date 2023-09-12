@@ -102,7 +102,7 @@ ENV/
 
 # Data
 *.tab.gz
-data/
+data/Length_512_lab_test_37_v2/
 local_data/
 weights/
 notebooks/MNIST_data/
