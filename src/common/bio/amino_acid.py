@@ -208,7 +208,7 @@ def generate_random_seqs(data, column='sequence', n_seqs=1000):
     lengths = data.sequence.str.len().sample(n_seqs).values + int(np.random.normal(scale=3))
     seqs = []
     for i in range(n_seqs):
-        r = np.random.choice(np.arange(1, 21), p=prop, size=lengths[i])
+        r = np.random.choice(np.arange(1, len(AMINO_ACID_TO_ID)), p=prop, size=lengths[i])
         seq = ">R_{}\nM".format(i)
         for a in r:
             seq = seq + ID_TO_AMINO_ACID[a]

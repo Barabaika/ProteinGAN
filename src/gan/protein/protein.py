@@ -74,7 +74,7 @@ class Protein(object):
             self.add_proteins_to_tensorboard(d_scores, "real", labels[0], real_to_display)
 
     def convert_real_to_one_hot(self, real_x): # Label smoothing?
-        real_to_display = tf.one_hot(real_x, 21, axis=1)
+        real_to_display = tf.one_hot(real_x, NUM_AMINO_ACIDS, axis=1)
         real_to_display = tf.transpose(real_to_display, perm=[0, 2, 1])
         return real_to_display
 
